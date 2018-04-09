@@ -123,9 +123,92 @@ class Game extends React.Component {
   }
 }
 
+class TodoListItem extends React.Component{
+  // + add new items to the list
+  // legyen: checkbox, title, description
+  // state nelkul   https://reactjs.org/docs/components-and-props.html
+
+
+
+  
+}
+
+class TodoList extends React.Component{
+  state = {
+      0:{
+        label: "asdad",
+        checked: true,
+        description: "hello"
+      },
+      1:{
+        label: "asdad21",
+        checked: false,
+        description: "hello"
+      },
+      2:{
+        label: "asdad132123123",
+        checked: true,
+        description: "hello"
+      }
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name]: {
+        label: this.state[event.target.name].label,
+        checked: event.target.checked
+      }
+    })
+    console.log(event.target.checked);
+  }
+
+  addEntry = (event) => {
+    let arr = Object.keys(this.state);
+    let lastKey = arr.length;
+
+    console.log(lastKey);
+
+    this.setState({
+      [lastKey]: {
+        label: "random text" + lastKey,
+        checked: false,
+        description: "adasd"
+      }
+    })
+  }
+
+
+  render(){
+    return(
+      <div>
+        <h3>Todo List:</h3>
+        <ul>
+          {Object.entries(this.state).map(([key, el])=>
+          !el.checked && <TodoListItem key = {key} value = {el} onChange={this.handleChange}/>
+          )}
+        </ul>
+
+        <h3>Done</h3>
+        <ul>
+          {Object.entries(this.state).filter(([key, el]) => el.checked).map(([key, el])=>
+          <li key={key}>
+            <input type="checkbox" name={key} onChange={this.handleChange} checked={el.checked}></input>
+            {el.label}
+          </li>
+        )}
+        </ul>
+        
+        <button onClick={this.addEntry}>Add item</button>
+      
+      </div>
+    );
+  }
+}
+
 // ========================================
 
 ReactDOM.render(<Game />, document.getElementById("root"));
+ReactDOM.render(<TodoList />, document.getElementById("list"));
 
 function calculateWinner(squares) {
   const lines = [

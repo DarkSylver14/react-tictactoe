@@ -128,7 +128,14 @@ class TodoListItem extends React.Component{
   // legyen: checkbox, title, description
   // state nelkul   https://reactjs.org/docs/components-and-props.html
 
-
+  render() {
+    return (
+      <li>
+        <input type="checkbox" name={this.key} onChange={this.handleChange} checked={this.el.checked}></input>
+        {this.el.label}
+      </li>
+    );
+  }
 
   
 }

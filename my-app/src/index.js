@@ -131,8 +131,8 @@ class TodoListItem extends React.Component{
   render() {
     return (
       <li>
-        <input type="checkbox" name={this.key} onChange={this.handleChange} checked={this.el.checked}></input>
-        {this.el.label}
+        <input type="checkbox" name="key" checked={this.el.checked}></input>
+        {this.state.el.label}
       </li>
     );
   }

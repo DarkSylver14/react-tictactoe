@@ -131,8 +131,8 @@ class TodoListItem extends React.Component{
   render() {
     return (
       <li>
-        <input type="checkbox" name="key" checked={this.el.checked}></input>
-        {this.state.el.label}
+        <input type="checkbox" name={this.props.name} checked={this.props.value.checked} onChange={this.props.onChange}></input>
+        {this.props.value.label}
       </li>
     );
   }
@@ -191,7 +191,7 @@ class TodoList extends React.Component{
         <h3>Todo List:</h3>
         <ul>
           {Object.entries(this.state).map(([key, el])=>
-          !el.checked && <TodoListItem key = {key} value = {el} onChange={this.handleChange}/>
+          !el.checked && <TodoListItem key = {key} name = {key} value = {el} onChange={this.handleChange}/>
           )}
         </ul>
 

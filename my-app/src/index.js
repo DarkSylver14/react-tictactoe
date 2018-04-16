@@ -169,15 +169,22 @@ class TodoList extends React.Component{
     console.log(event.target.checked);
   }
 
+  getName = (event) =>{
+    console.log(event.target.value);
+    return event.target.value;
+  }
+
   addEntry = (event) => {
+    event.preventDefault();
     let arr = Object.keys(this.state);
     let lastKey = arr.length;
+    let name = this.getName();
 
     console.log(lastKey);
 
     this.setState({
       [lastKey]: {
-        label: "random text" + lastKey,
+        label: name,
         checked: false,
         description: "adasd"
       }
@@ -198,14 +205,17 @@ class TodoList extends React.Component{
         <h3>Done</h3>
         <ul>
           {Object.entries(this.state).filter(([key, el]) => el.checked).map(([key, el])=>
-          <li key={key}>
-            <input type="checkbox" name={key} onChange={this.handleChange} checked={el.checked}></input>
-            {el.label}
-          </li>
+          <TodoListItem key = {key} name = {key} value = {el} onChange={this.handleChange}/>
         )}
         </ul>
-        
-        <button onClick={this.addEntry}>Add item</button>
+
+        <form onSubmit={this.addEntry}>
+          <label>
+            Name:
+            <input type="text" value={this.state.newitem} name="newitem" onChange={this.getName}/>
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
       
       </div>
     );

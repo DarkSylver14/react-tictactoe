@@ -136,8 +136,40 @@ class TodoListItem extends React.Component{
       </li>
     );
   }
+}
 
-  
+class NewEntry extends React.Component{
+
+  state = {
+    newitem: ""
+  }
+
+  handleChange = (event) => {
+    console.log(event.target.value);
+    this.setState({
+      newitem: event.target.value
+    })
+  }
+
+  handleSubmit = (event) =>{
+    event.preventDefault();
+    this.props.onNewEntry(this.state.newitem);
+    this.setState({
+      newitem:""
+    })
+  }
+
+  render(){
+    return(
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input type="text" value={this.state.newitem} name="newitem" onChange={this.handleChange}/>
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    )
+  }
 }
 
 class TodoList extends React.Component{
@@ -174,17 +206,16 @@ class TodoList extends React.Component{
     return event.target.value;
   }
 
-  addEntry = (event) => {
-    event.preventDefault();
+  addEntry = (entryName) => {
+    
     let arr = Object.keys(this.state);
     let lastKey = arr.length;
-    let name = this.getName();
 
-    console.log(lastKey);
+    // console.log(event.target["0"].value);
 
     this.setState({
       [lastKey]: {
-        label: name,
+        label: entryName,
         checked: false,
         description: "adasd"
       }
@@ -209,13 +240,7 @@ class TodoList extends React.Component{
         )}
         </ul>
 
-        <form onSubmit={this.addEntry}>
-          <label>
-            Name:
-            <input type="text" value={this.state.newitem} name="newitem" onChange={this.getName}/>
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+        <NewEntry onNewEntry={this.addEntry}/>
       
       </div>
     );
